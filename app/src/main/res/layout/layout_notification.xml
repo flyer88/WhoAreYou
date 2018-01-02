@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:id="@+id/task_id_tv"
+        android:layout_width="wrap_content"
+        android:minWidth="30dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_margin="6dp"
+        android:minWidth="30dp"
+        android:id="@+id/current_activity_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!--<TextView-->
+        <!--android:layout_margin="6dp"-->
+        <!--android:minWidth="30dp"-->
+        <!--android:id="@+id/action_tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"/>-->
+
+</LinearLayout>
