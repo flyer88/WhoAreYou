@@ -3,6 +3,7 @@ package io.dove.whoareyou;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.List;
@@ -64,8 +65,43 @@ public class DoveMonitor implements Application.ActivityLifecycleCallbacks {
         notification(new StackEvent(StackEvent.NONE,taskStack),instanceInfo);
     }
 
+
+    private boolean clearTop(TaskStack taskStack,Class cls){
+        Stack<ActivityInstanceInfo> activityInstanceInfoStack = taskStack.getActivityInstanceInfoStack();
+        if (activityInstanceInfoStack == null || activityInstanceInfoStack.empty()) return false;
+        int count = 0;
+        boolean contains = false;
+        for (int i = 0;i<activityInstanceInfoStack.size();i++) {
+            count = count + 1;
+            ActivityInstanceInfo activityInstanceInfo = activityInstanceInfoStack
+                    .elementAt(activityInstanceInfoStack.size() - count);
+            if (cls == activityInstanceInfo.getActivityCls()){
+                contains = true;
+                break;
+            }
+        }
+        if (!contains) return false;
+        for (int i=0; i<count; i++){
+            activityInstanceInfoStack.pop();
+        }
+        return true;
+    }
+
+    private void handleSpecialFlag(Activity activity){
+        Intent intent = activity.getIntent();
+        if (intent == null || intent.getFlags() == 0) return;
+        TaskStack taskStack = findTaskStack(activity.getTaskId());
+        if (taskStack == null) return;
+        int flags = intent.getFlags();
+        if ((flags & Intent.FLAG_ACTIVITY_CLEAR_TOP) >0){
+            // 遍历栈中 Activity，然后清楚到对应的 Activity，包括对应的
+            clearTop(taskStack,activity.getClass());
+        }
+    }
+
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        handleSpecialFlag(activity);
         int id = activity.getTaskId();
         ActivityInstanceInfo activityInstanceInfo = new ActivityInstanceInfo(id,activity.toString(),activity.getClass());
         activityInstanceInfo.setAction(ActivityInstanceInfo.Action.ON_CREATED);
@@ -118,9 +154,14 @@ public class DoveMonitor implements Application.ActivityLifecycleCallbacks {
                 break;
             }
         }
-        if (removeFrom == null) return;
-        if (removeFrom.getActivityInstanceInfoStack() == null) return;
-
+        if (removeFrom == null
+                || removeFrom.getActivityInstanceInfoStack() == null
+                || removeFrom.getActivityInstanceInfoStack().empty())
+            return;
+        if (!removeFrom.getActivityInstanceInfoStack().peek().getName()
+                .equals(activity.toString())){
+            return;
+        }
         removeFrom.getActivityInstanceInfoStack().pop();
 
         ActivityInstanceInfo activityInstanceInfo = new ActivityInstanceInfo(
