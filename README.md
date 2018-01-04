@@ -1,6 +1,12 @@
 # WhoAreYou
 
-### USAGE
+### About
+
+A repo to get the activity's name.
+When you open your app, you may forget which activity it is.
+This repo will help you to find out current activity's name
+
+### Usage
 
 1. add dependencies
 
