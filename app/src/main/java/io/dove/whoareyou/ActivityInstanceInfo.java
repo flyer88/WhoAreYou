@@ -12,10 +12,11 @@ public class ActivityInstanceInfo {
     private Action mAction;
 
 
-    public ActivityInstanceInfo(int taskId, String name,Class activityCls){
+    public ActivityInstanceInfo(int taskId, String name,Class activityCls,Action action){
         this.taskId = taskId;
         this.name = name;
         this.activityCls = activityCls;
+        this.mAction = action;
     }
 
     public String getName() {
