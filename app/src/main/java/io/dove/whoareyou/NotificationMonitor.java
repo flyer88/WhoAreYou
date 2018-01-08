@@ -45,7 +45,7 @@ public class NotificationMonitor {
         }
 
         if (mBuilder == null) {
-            mBuilder = new NotificationCompat.Builder(mContext, mContext.getPackageName());
+            mBuilder = new NotificationCompat.Builder(mContext);
         }
         setRemoteViews(activityInstanceInfo,stackEvent);
         mBuilder.setCustomContentView(mRemoteViews);
