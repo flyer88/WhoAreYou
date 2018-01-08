@@ -11,7 +11,7 @@ This repo will help you to find out current activity's name
 1. add dependencies
 
 ```groovy
-compile 'io.dove:findactivity:0.0.2'
+compile 'io.dove:findactivity:0.1.1'
 ```
 
 2. insert code to your application
