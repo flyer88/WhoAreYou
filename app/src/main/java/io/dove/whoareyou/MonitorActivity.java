@@ -1,13 +1,13 @@
 package io.dove.whoareyou;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-public class MonitorActivity extends AppCompatActivity {
+public class MonitorActivity extends Activity {
 
 
     DoveMonitor mDoveMonitor;
